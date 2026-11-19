@@ -1,0 +1,6 @@
+{
+  "appId": "ma.smartattendance.qr",
+  "appName": "Smart Attendance QR",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

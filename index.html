@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102a43">
+<title>Smart Attendance QR</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div><div class="brand">Smart Attendance QR</div><small>نظام ذكي لحضور التلاميذ</small></div>
+  <span class="offline">● يعمل محلياً</span>
+</header>
+<nav class="tabs">
+  <button class="tab active" data-page="dashboard">الرئيسية</button>
+  <button class="tab" data-page="scan">مسح QR</button>
+  <button class="tab" data-page="students">التلاميذ</button>
+  <button class="tab" data-page="records">السجل</button>
+  <button class="tab" data-page="settings">الإعدادات</button>
+</nav>
+<main>
+<section id="dashboard" class="page active">
+  <h1>لوحة القيادة</h1><p class="muted" id="todayLabel"></p>
+  <div class="stats">
+    <article><b id="totalStudents">0</b><span>مجموع التلاميذ</span></article>
+    <article><b id="presentCount">0</b><span>الحاضرون اليوم</span></article>
+    <article><b id="absentCount">0</b><span>الغائبون اليوم</span></article>
+  </div>
+  <div class="panel"><h3>إجراءات سريعة</h3>
+    <div class="actions"><button class="primary" data-go="scan">بدء مسح QR</button><button data-go="students">إضافة تلميذ</button><button data-go="records">عرض سجل اليوم</button></div>
+  </div>
+  <div class="panel"><h3>آخر التسجيلات</h3><div id="recent" class="empty">لا توجد تسجيلات بعد.</div></div>
+</section>
+
+<section id="scan" class="page">
+  <h1>تسجيل الحضور</h1>
+  <p class="muted">امسح رمز التلميذ. يسمح النظام بتسجيل الحضور مرة واحدة فقط في اليوم.</p>
+  <div class="panel scanner">
+    <video id="video" playsinline></video>
+    <div id="scanStatus" class="scan-status">اضغط على تشغيل الكاميرا للبدء</div>
+    <div class="actions"><button class="primary" id="startCamera">تشغيل الكاميرا</button><button id="stopCamera">إيقاف</button></div>
+  </div>
+  <div class="panel">
+    <h3>إدخال الرمز يدوياً</h3>
+    <div class="inline"><input id="manualCode" placeholder="رقم التلميذ أو رمز QR"><button class="primary" id="manualSubmit">تسجيل</button></div>
+  </div>
+  <div id="scanResult"></div>
+</section>
+
+<section id="students" class="page">
+  <h1>إدارة التلاميذ</h1>
+  <div class="panel">
+    <h3 id="studentFormTitle">إضافة تلميذ جديد</h3>
+    <input id="studentId" placeholder="رقم التلميذ (إجباري)">
+    <input id="studentName" placeholder="الاسم الكامل">
+    <input id="studentClass" placeholder="القسم / المستوى">
+    <div class="actions"><button class="primary" id="saveStudent">حفظ التلميذ</button><button id="cancelEdit" class="hidden">إلغاء التعديل</button></div>
+  </div>
+  <div class="panel"><div class="inline"><h3>لائحة التلاميذ</h3><input id="studentSearch" placeholder="بحث..." class="search"></div><div id="studentList" class="list"></div></div>
+</section>
+
+<section id="records" class="page">
+  <h1>سجل الحضور</h1>
+  <div class="panel">
+    <div class="inline"><input type="date" id="recordDate"><button id="showRecords" class="primary">عرض</button></div>
+    <div id="recordList" class="list"></div>
+    <div class="actions"><button id="exportCsv">تصدير CSV</button><button id="printRecords">طباعة السجل</button></div>
+  </div>
+</section>
+
+<section id="settings" class="page">
+  <h1>الإعدادات والنسخ الاحتياطي</h1>
+  <div class="panel">
+    <label>اسم المؤسسة</label><input id="schoolName" placeholder="اسم المؤسسة">
+    <button class="primary" id="saveSettings">حفظ الإعدادات</button>
+  </div>
+  <div class="panel">
+    <h3>النسخ الاحتياطي</h3>
+    <p class="muted">احفظ نسخة JSON من بيانات التلاميذ والحضور، أو استرجع نسخة سابقة.</p>
+    <div class="actions"><button class="primary" id="backupBtn">تنزيل نسخة احتياطية JSON</button><label class="filebtn">استرجاع نسخة JSON<input type="file" id="restoreFile" accept=".json,application/json"></label></div>
+  </div>
+  <div class="panel"><h3>استيراد / تصدير التلاميذ</h3><p class="muted">استيراد ملف CSV بأعمدة: id,name,className</p>
+    <div class="actions"><button id="exportStudents">تصدير التلاميذ CSV</button><label class="filebtn">استيراد CSV<input type="file" id="importCsv" accept=".csv,text/csv"></label></div>
+  </div>
+  <div class="panel"><button class="danger" id="clearAll">حذف جميع البيانات</button></div>
+</section>
+</main>
+<footer>Smart Attendance QR · إصدار 1.0</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="app.js"></script>
+</body></html>
